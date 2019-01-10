@@ -11,4 +11,5 @@ class Product < ApplicationRecord
 
   scope :search_name, -> (name) {where("name like ?", "#{name}%")}
   scope :search_category, -> (category_id) {where(category_id: category_id)}
+  scope :min_max_price, -> (min,max) {where(price: min..max)}
 end

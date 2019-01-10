@@ -1,9 +1,18 @@
-<% provide :title, @categories.name %>
+<% provide :title, @category.name %>
 <div class="content">
   <div class="container">
     <div class="row">
       <div class="col-md-3">
-        
+        <%= form_tag @category, method: :get do %>
+          <%= text_field_tag "search_name", params[:search_name], placeholder: "Enter products name" %>
+          <%= select_tag :category_id, options_for_select(@categories.pluck(:name, :id),params[:category_id]), include_blank: true %>
+            <%= submit_tag "Search!" %>
+          <% end %>
+          <%= form_tag({}, method: :get) do %>
+            <%= text_field_tag "min_price", params[:min_price], placeholder: "Enter price min" %>
+            <%= text_field_tag "max_price", params[:min_price], placeholder: "Enter price max" %>
+            <%= submit_tag "Search!" %>
+          <% end %>
       </div>
       <div class="col-md-9">
         <% @products.each do |product| %>
@@ -32,7 +41,7 @@
               </h3>
               <div class="price-box clearfix">
                 <div class="special-price">
-                  <span class="price product-price"><%= product.price%>$</span>
+                  <span class="price product-price"><%= product.price %>$</span>
                 </div>
               </div>
             </div>
